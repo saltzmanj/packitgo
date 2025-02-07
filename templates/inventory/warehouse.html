@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warehouse Dashboard</title>
+
+{% extends "inventory/base.html" %}
+{% block content %}
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,9 +21,6 @@
             background-color: #f4f4f4;
         }
     </style>
-</head>
-<body>
-
     <h2>Warehouse Batch Tracking</h2>
     <table>
         <thead>
@@ -66,6 +60,4 @@
 
         fetchBatchData(); // Load data on page load
     </script>
-
-</body>
-</html>
+{% endblock %}

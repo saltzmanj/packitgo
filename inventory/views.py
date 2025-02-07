@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_not_required
 
 # Create your views here.
@@ -27,6 +27,10 @@ def InventoryLogin(request):
             return render(request, "registration/login.html", context)
     else:
         return HttpResponse(status = 404)
+
+def InventoryLogout(request):
+    logout(request)
+    return redirect("/accounts/login")
 
 def Warehouse(request):
     context = {}

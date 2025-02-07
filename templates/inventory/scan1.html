@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Scanner - Warehouse App</title>
+{% extends "inventory/base.html" %}
+{% block content %}
     <script src="https://unpkg.com/html5-qrcode"></script>
     <style>
         body {
@@ -19,9 +15,6 @@
             margin-top: 20px;
         }
     </style>
-</head>
-<body>
-
     <h2>Scan QR Code</h2>
     <div id="reader"></div>
     <div id="batchInfo">
@@ -42,5 +35,4 @@
         scanner.render(onScanSuccess, onScanFailure);
     </script>
 
-</body>
-</html>
+{% endblock %}
