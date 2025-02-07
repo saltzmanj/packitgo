@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Scanner - Warehouse App</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #reader {
+            width: 300px;
+            margin: auto;
+        }
+        #batchInfo {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Scan QR Code</h2>
+    <div id="reader"></div>
+    <div id="batchInfo">
+        <p><strong>Batch Info:</strong> <span id="batchData">No scan yet</span></p>
+    </div>
+
+    <script>
+        function onScanSuccess(qrCodeMessage) {
+            document.getElementById("batchData").innerText = qrCodeMessage;
+            alert("Batch Registered: " + qrCodeMessage);
+        }
+
+        function onScanFailure(error) {
+            console.warn(error);
+        }
+
+        let scanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+        scanner.render(onScanSuccess, onScanFailure);
+    </script>
+
+</body>
+</html>

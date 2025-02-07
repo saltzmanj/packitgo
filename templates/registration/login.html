@@ -1,9 +1,10 @@
 {% extends "registration/base.html" %}
 {% block content %}
-
+     <h2 class="text-center mb-4">PackItGo - Login</h2>
     {% if is_failure %}
     <p class="error"> Failed to login. Please check your username and password </p>
     {% endif %}
+
     <form method="post" action="{% url 'inventory:InventoryLogin' %}">
         {% csrf_token %}
             <label for="username">

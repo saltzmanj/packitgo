@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, button {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+            border: none;
+            color: white;
+        }
+        .go-btn {
+            background-color: #28a745;
+        }
+        .cancel-btn {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Batch Details</h2>
+    <form id="batchForm">
+        <input type="text" id="partNumber" placeholder="Part Number" required>
+        <input type="text" id="batch" placeholder="Batch" required>
+        <input type="number" id="quantity" placeholder="Quantity" required>
+        <input type="text" id="from" placeholder="From Location" required>
+        <input type="text" id="to" placeholder="To Location" required>
+        <button type="submit" class="go-btn">Go</button>
+        <button type="button" class="cancel-btn" onclick="cancelOperation()">Cancel</button>
+    </form>
+
+    <script>
+        function cancelOperation() {
+            alert("Operation Cancelled");
+            // Redirect or reset logic can go here
+        }
+
+        document.getElementById("batchForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("Batch Registered Successfully!");
+            // Submit logic can go here
+        });
+    </script>
+
+</body>
+</html>

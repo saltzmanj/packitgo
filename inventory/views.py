@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_not_required
@@ -15,17 +15,25 @@ def InventoryLogin(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponse(status = 200)
+
+            if user.groups.filter(name='WarehouseManagers').exists():
+                return redirect("/inventory/warehouse/")
+            else:
+                return redirect("/inventory/moveinventory/")
         else:
             context = {
                 'is_failure': True
             }
             return render(request, "registration/login.html", context)
     else:
-        return redirect("registration/login.html")
+        return HttpResponse(status = 404)
 
 def Warehouse(request):
-    return HttpResponse(status = 200)
+    context = {}
+    return render(request, "inventory/warehouse.html", context)
 
 def MoveInventory(request):
-    return HttpResponse(status = 200)
+    context = {}
+    return render(request, "inventory/scan1.html", context)
+
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Warehouse Batch Tracking</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Batch ID</th>
+                <th>Location</th>
+                <th>Last Updated</th>
+            </tr>
+        </thead>
+        <tbody id="batchTable">
+            <tr>
+                <td colspan="3">Loading data...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchBatchData() {
+            // Simulating fetching data from an API
+            let batchData = [
+                { id: "BATCH123", location: "Aisle 5 - Shelf 2", time: "2025-02-04 10:15 AM" },
+                { id: "BATCH456", location: "Aisle 2 - Shelf 3", time: "2025-02-04 10:20 AM" }
+            ];
+            
+            let tableBody = document.getElementById("batchTable");
+            tableBody.innerHTML = ""; // Clear current table
+
+            batchData.forEach(batch => {
+                let row = `<tr>
+                    <td>${batch.id}</td>
+                    <td>${batch.location}</td>
+                    <td>${batch.time}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        fetchBatchData(); // Load data on page load
+    </script>
+
+</body>
+</html>
