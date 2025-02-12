@@ -1,63 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batch Details</title>
-    <style>
+{% extends "inventory/base.html" %}
+{% block content %}
+<style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
         }
-        form {
+        #reader {
+            width: 300px;
+            margin: auto;
+        }
+        #batchInfo {
             margin-top: 20px;
         }
-        input, button {
-            display: block;
-            width: 80%;
-            margin: 10px auto;
+        #batchForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .form-group label {
+            text-align: left;
+            flex: 0 0 120px;
+            margin-right: 10px;
+        }
+        .form-control {
+            width: 100%;
+            max-width: 250px;
             padding: 10px;
-            font-size: 16px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
         }
-        button {
-            cursor: pointer;
-            border: none;
-            color: white;
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
         }
-        .go-btn {
-            background-color: #28a745;
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
         }
-        .cancel-btn {
-            background-color: #dc3545;
+        .button-container button {
+            min-width: 100px;
         }
     </style>
-</head>
-<body>
-
     <h2>Batch Details</h2>
-    <form id="batchForm">
-        <input type="text" id="partNumber" placeholder="Part Number" required>
-        <input type="text" id="batch" placeholder="Batch" required>
-        <input type="number" id="quantity" placeholder="Quantity" required>
-        <input type="text" id="from" placeholder="From Location" required>
-        <input type="text" id="to" placeholder="To Location" required>
-        <button type="submit" class="go-btn">Go</button>
-        <button type="button" class="cancel-btn" onclick="cancelOperation()">Cancel</button>
+    <form id="batchForm" method="POST" action="{% url 'inventory:MoveInventoryExecute' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="partNumber">Part Number</label>
+            <input type="text" class="form-control" id="partNumber" placeholder="Part Number" required value="{{ part_number }}">
+        </div>
+        <div class="form-group">
+            <label for="batch">Batch</label>
+            <input type="text" class="form-control" id="batch" placeholder="Batch" required value="{{ batch }}">
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control" id="quantity" placeholder="Quantity" required value="{{ quantity }}">
+        </div>
+        <div class="form-group">
+            <label for="from">From Location</label>
+            <input type="text" class="form-control" id="from" placeholder="From Location" required autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label for="to">To Location</label>
+            <input type="text" class="form-control" id="to" placeholder="To Location" required autocomplete="off">
+        </div>
+
+        <input type="hidden" name="action_input" id="action_input" value="">
+        <div class="form-group button-container">
+            <button type="button" class="btn btn-secondary" onclick="submitForm('cancel')">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="submitForm('move')">Start Move</button>
+        </div>
     </form>
 
     <script>
-        function cancelOperation() {
-            alert("Operation Cancelled");
-            // Redirect or reset logic can go here
+        function submitForm(action) {
+            document.getElementById('action_input').value = action;
+
+            document.getElementById('batchForm').submit();
         }
 
         document.getElementById("batchForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            alert("Batch Registered Successfully!");
-            // Submit logic can go here
+            // Remove the default form submission handler since we're handling it with the buttons now
         });
     </script>
 
-</body>
-</html>
+{% endblock %}

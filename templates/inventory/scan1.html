@@ -18,13 +18,26 @@
     <h2>Scan QR Code</h2>
     <div id="reader"></div>
     <div id="batchInfo">
-        <p><strong>Batch Info:</strong> <span id="batchData">No scan yet</span></p>
+        <p><strong>Batch Info:</strong> 
+            <span id="batchData">No scan yet</span>
+        </p>
+
+        <form method="POST" action="{% url 'inventory:MoveInventoryConfirm' %}">
+            {% csrf_token %}
+            <input type="hidden" id="qrCodeInput" name="qr_code" value="">
+            <div id="submitBtn" style="display:none">
+                <button class="btn btn-primary">Read Data</button>
+            </div>
+        </form>
     </div>
 
     <script>
         function onScanSuccess(qrCodeMessage) {
             document.getElementById("batchData").innerText = qrCodeMessage;
-            alert("Batch Registered: " + qrCodeMessage);
+            document.getElementById("qrCodeInput").value = qrCodeMessage;
+            // alert("Batch Registered: " +  qrCodeMessage);
+            const element = document.getElementById('submitBtn');
+            element.style.display="block";
         }
 
         function onScanFailure(error) {
