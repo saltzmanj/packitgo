@@ -1,4 +1,4 @@
-/*style.css*/
+
 body {
     display: flex;
     align-items: center;
@@ -51,7 +51,7 @@ label {
     font-weight: bold;
 }
 
-input {
+/* input {
     display: block;
     width: 100%;
     margin-bottom: 15px;
@@ -59,20 +59,8 @@ input {
     box-sizing: border-box;
     border: 1px solid #ddd;
     border-radius: 5px;
-}
+} */
 
-.btn {
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border: none;
-    color:  #ffc;
-    cursor: pointer;
-    background-color: #ffc;
-    width: 100%;
-    font-size: 16px;
-}
 
 .wrap {
     display: flex;

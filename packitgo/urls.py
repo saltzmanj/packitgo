@@ -21,10 +21,9 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('inventory/', include('inventory.urls'), name  = 'inventory')
-]
-
-urlpatterns += [
+    path('inventory/', include('inventory.urls'), name  = 'inventory'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path("accounts/login/", auth_views.LoginView.as_view())
+    path("accounts/login/", auth_views.LoginView.as_view()),
+    path('accounts/password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
+    path('accounts/password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done')
 ]
