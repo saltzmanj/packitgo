@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_not_required
+from .models import Location, LocationType
 
 # Create your views here.
 
@@ -33,7 +34,12 @@ def InventoryLogout(request):
     return redirect("/accounts/login")
 
 def Warehouse(request):
-    context = {}
+    locations = Location.objects.all() 
+    location = Location.objects.first()
+    context = {
+        'locations': locations,
+        'location':location
+    }
     return render(request, "inventory/warehouse.html", context)
 
 def MoveInventory(request):
