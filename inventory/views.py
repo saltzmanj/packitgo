@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_not_required
-from .models import Location, LocationType
+from inventory.models import Location, LocationType, InventoryTransaction, Batch, InventoryTransactionStatus, Part
+from datetime import datetime
 
 # Create your views here.
 
@@ -47,6 +48,7 @@ def MoveInventory(request):
     return render(request, "inventory/scan1.html", context) 
 
 def MoveInventoryConfirm(request):
+    locations = Location.objects.all().order_by("locationName")
 
     qr_code_raw = request.POST['qr_code']
     qr_code_split = qr_code_raw.split("|")
@@ -57,7 +59,8 @@ def MoveInventoryConfirm(request):
     context = {
         'part_number': part_number,
         'batch': batch,
-        'quantity': quantity
+        'quantity': quantity,
+        'locations': locations
     }
     return render(request, "inventory/scan2.html", context)
 
@@ -65,6 +68,19 @@ def MoveInventoryExecute(request):
     # Handle cancel button
     if 'cancel' == request.POST["action_input"]:
         return redirect('/inventory/moveinventory')
+    
+    partToUse, partCreated = Part.objects.get_or_create(partNumber=request.POST['partNumber'])
+    batchToUse, created = Batch.objects.get_or_create(partNumber=partToUse, batchNumber=request.POST['batch'])
+
+    invTxn = InventoryTransaction.objects.create(
+        fromLocation=Location.objects.get(locationName=request.POST['from']),
+        toLocation=Location.objects.get(locationName=request.POST['to']),
+        quantity=float(request.POST['quantity']),
+        batch=batchToUse,
+        statusId=InventoryTransactionStatus.objects.get(description="INPROGRESS"),
+        timeStamp=datetime.now()
+    )
+
     
     context = {}
     return render(request, "inventory/scan3.html", context)
