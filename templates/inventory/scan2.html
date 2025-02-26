@@ -1,7 +1,7 @@
 {% extends "inventory/base.html" %}
 {% block content %}
 
-    <h2>Batch Details</h2>
+    <h2>Enter Inventory Details</h2>
     <form id="batchForm" method="POST" action="{% url 'inventory:MoveInventoryExecute' %}">
         {% csrf_token %}
         <div class="form-group">
@@ -45,7 +45,6 @@
     <script>
         function submitForm(action) {
             document.getElementById('action_input').value = action;
-
             document.getElementById('batchForm').submit();
         }
 

@@ -80,7 +80,11 @@ def MoveInventoryExecute(request):
         statusId=InventoryTransactionStatus.objects.get(description="INPROGRESS"),
         timeStamp=datetime.now()
     )
-
     
-    context = {}
+    context = {
+        'InventoryTransaction': invTxn,
+        'Part': partToUse,
+        'Batch': batchToUse
+
+    }
     return render(request, "inventory/scan3.html", context)
